@@ -4,7 +4,8 @@
   "description": "control appointments api",
   "main": "server.ts",
   "scripts": {
-    "test": "jest --passWithNoTests --runInBand --no-cache"
+    "test": "jest --passWithNoTests --runInBand --no-cache",
+    "test:staged": "npm test -- --findRelatedTests"
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,9 @@
     "ts-jest": "^29.0.3",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3"
   }
 }
