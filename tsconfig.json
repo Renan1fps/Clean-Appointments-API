@@ -8,7 +8,6 @@
       "@/*": ["*"]
     },
     "target": "es2017",
-    "emitDecoratorMetadata": true,
     "module": "commonjs",
     "allowJs": true,
     "sourceMap": true,
