@@ -1,7 +1,7 @@
-import { HttpRequest } from '../protocols'
+import { HttpRequest, httpResponse } from '../protocols'
 
 export class SignUpController {
-  async handle (httpRequest: HttpRequest): Promise<any> {
+  async handle (httpRequest: HttpRequest): Promise<httpResponse> {
     const requiredFields = ['email', 'password', 'passwordConfirmation', 'brandId']
 
     for (const field of requiredFields) {
@@ -9,5 +9,7 @@ export class SignUpController {
         return { body: `Missing param ${field}`, statusCode: 400 }
       }
     }
+
+    return { body: {}, statusCode: 200 }
   }
 }
