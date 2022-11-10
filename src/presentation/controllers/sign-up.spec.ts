@@ -42,4 +42,19 @@ describe('SignUp-Controller', () => {
     expect(httpResponse.body).toEqual('Missing param passwordConfirmation')
     expect(httpResponse.statusCode).toBe(400)
   })
+
+  test('Should return 400 if brandId is not provided', async () => {
+    const sut = new SignUpController()
+
+    const httpRequest = {
+      body: {
+        email: 'any_value',
+        password: 'any_value',
+        passwordConfirmation: 'any_value'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.body).toEqual('Missing param brandId')
+    expect(httpResponse.statusCode).toBe(400)
+  })
 })
