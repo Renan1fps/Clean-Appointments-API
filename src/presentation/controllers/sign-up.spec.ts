@@ -7,7 +7,8 @@ describe('SignUp-Controller', () => {
     const httpRequest = {
       body: {
         password: 'any_value',
-        passwordConfirmation: 'any_value'
+        passwordConfirmation: 'any_value',
+        brandId: 'any_value'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -21,7 +22,8 @@ describe('SignUp-Controller', () => {
     const httpRequest = {
       body: {
         email: 'any_value',
-        passwordConfirmation: 'any_value'
+        passwordConfirmation: 'any_value',
+        brandId: 'any_value'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -35,7 +37,8 @@ describe('SignUp-Controller', () => {
     const httpRequest = {
       body: {
         email: 'any_value',
-        password: 'any_value'
+        password: 'any_value',
+        brandId: 'any_value'
       }
     }
     const httpResponse = await sut.handle(httpRequest)

@@ -2,7 +2,7 @@ import { HttpRequest, httpResponse } from '../protocols'
 
 export class SignUpController {
   async handle (httpRequest: HttpRequest): Promise<httpResponse> {
-    const requiredFields = ['email', 'password', 'passwordConfirmation', 'brandId']
+    const requiredFields = ['brandId', 'email', 'password', 'passwordConfirmation']
 
     for (const field of requiredFields) {
       if (!httpRequest.body[`${field}`]) {
