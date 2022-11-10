@@ -114,4 +114,22 @@ describe('SignUp-Controller', () => {
     const output = sut.handle(httpRequest)
     await expect(output).rejects.toThrow()
   })
+
+  test('Should calls email validator with correct value', async () => {
+    const { sut, emailValidator } = makeSut()
+
+    const isValidSpy = jest.spyOn(emailValidator, 'isValid')
+
+    const httpRequest = {
+      body: {
+        email: 'any_value',
+        password: 'any_value',
+        passwordConfirmation: 'any_value',
+        brandId: 'any_value'
+      }
+    }
+    await sut.handle(httpRequest)
+    expect(isValidSpy).toHaveBeenCalledWith(httpRequest.body.email)
+    expect(isValidSpy).toHaveBeenCalledTimes(1)
+  })
 })
