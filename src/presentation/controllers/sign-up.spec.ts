@@ -1,3 +1,4 @@
+import { AddAccount, InputCreateUser, OutputCreateUser } from '../domain/use-cases/add-account'
 import { EmailValidator } from '../protocols'
 import { SignUpController } from './signUp'
 
@@ -10,11 +11,28 @@ const makeEmailValidator = (): EmailValidator => {
   return new EmailValidatorMock()
 }
 
+const makeCreateUserUseCase = (): AddAccount => {
+  class CreateUserUseCaseMock implements AddAccount {
+    async execute (input: InputCreateUser): Promise<OutputCreateUser> {
+      return {
+        id: 'any_value',
+        email: input.email,
+        createdAt: 'any_value',
+        brandId: 'any_value'
+      }
+    }
+  }
+
+  return new CreateUserUseCaseMock()
+}
+
 const makeSut = (): any => {
   const emailValidator = makeEmailValidator()
-  const sut = new SignUpController(emailValidator)
+  const createUserUseCase = makeCreateUserUseCase()
+  const sut = new SignUpController(emailValidator, createUserUseCase)
   return {
     emailValidator,
+    createUserUseCase,
     sut
   }
 }
@@ -130,6 +148,28 @@ describe('SignUp-Controller', () => {
     }
     await sut.handle(httpRequest)
     expect(isValidSpy).toHaveBeenCalledWith(httpRequest.body.email)
+    expect(isValidSpy).toHaveBeenCalledTimes(1)
+  })
+
+  test('Should calls create user user-case with correct values', async () => {
+    const { sut, createUserUseCase } = makeSut()
+
+    const isValidSpy = jest.spyOn(createUserUseCase, 'execute')
+
+    const httpRequest = {
+      body: {
+        email: 'any_value',
+        password: 'any_value',
+        passwordConfirmation: 'any_value',
+        brandId: 'any_value'
+      }
+    }
+    await sut.handle(httpRequest)
+    expect(isValidSpy).toHaveBeenCalledWith({
+      email: httpRequest.body.email,
+      brandId: httpRequest.body.brandId,
+      password: httpRequest.body.password
+    })
     expect(isValidSpy).toHaveBeenCalledTimes(1)
   })
 })
