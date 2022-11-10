@@ -189,4 +189,23 @@ describe('SignUp-Controller', () => {
     const output = sut.handle(httpRequest)
     await expect(output).rejects.toThrow()
   })
+
+  test('Should return 200 if the user was created', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        email: 'any_value',
+        password: 'any_value',
+        passwordConfirmation: 'any_value',
+        brandId: 'any_value'
+      }
+    }
+    const output = await sut.handle(httpRequest)
+    expect(output.body).toEqual({
+      id: 'any_value',
+      email: httpRequest.body.email,
+      createdAt: 'any_value',
+      brandId: 'any_value'
+    })
+  })
 })
