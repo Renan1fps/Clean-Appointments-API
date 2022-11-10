@@ -97,4 +97,21 @@ describe('SignUp-Controller', () => {
     expect(httpResponse.body).toEqual('Invalid Param')
     expect(httpResponse.statusCode).toBe(400)
   })
+
+  test('Should throw error if emailValidator throws', async () => {
+    const { sut, emailValidator } = makeSut()
+
+    jest.spyOn(emailValidator, 'isValid').mockImplementationOnce(() => { throw new Error() })
+
+    const httpRequest = {
+      body: {
+        email: 'any_value',
+        password: 'any_value',
+        passwordConfirmation: 'any_value',
+        brandId: 'any_value'
+      }
+    }
+    const output = sut.handle(httpRequest)
+    await expect(output).rejects.toThrow()
+  })
 })
