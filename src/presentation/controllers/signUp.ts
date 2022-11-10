@@ -11,5 +11,9 @@ export class SignUpController {
     if (!httpRequest.body.passwordConfirmation) {
       return { body: 'Missing param passwordConfirmation', statusCode: 400 }
     }
+
+    if (!httpRequest.body.brandId) {
+      return { body: 'Missing param brandId', statusCode: 400 }
+    }
   }
 }
