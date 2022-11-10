@@ -172,4 +172,21 @@ describe('SignUp-Controller', () => {
     })
     expect(isValidSpy).toHaveBeenCalledTimes(1)
   })
+
+  test('Should throw error if createUserUserCase throws', async () => {
+    const { sut, createUserUseCase } = makeSut()
+
+    jest.spyOn(createUserUseCase, 'execute').mockImplementationOnce(() => { throw new Error() })
+
+    const httpRequest = {
+      body: {
+        email: 'any_value',
+        password: 'any_value',
+        passwordConfirmation: 'any_value',
+        brandId: 'any_value'
+      }
+    }
+    const output = sut.handle(httpRequest)
+    await expect(output).rejects.toThrow()
+  })
 })
